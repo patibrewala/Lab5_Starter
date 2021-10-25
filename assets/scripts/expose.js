@@ -29,34 +29,34 @@ function init() {
 
   // Play audio
   button.addEventListener('click', function(){
-    audio.play();
-
-    //confetti if party horn
-    if (document.querySelector('select').value == 'party-horn' && audio.volume > 0){
-      jsConfetti.addConfetti();
-    }
+    if(horn.value != 'select' && volSlider.value > 0){
+      audio.play();
+      
+      //confetti if party horn
+      if (horn.value == 'party-horn'){
+        jsConfetti.addConfetti();
+      }
+    }  
   });
 
-  let volSlider = document.getElementById("volume");
-  let volSound = document.querySelector('audio');
-  let volImg = document.querySelector('img[src="assets/icons/volume-level-2.svg"]]');
+  let volSlider = document.querySelector("input");
+  let volImg = document.querySelector('div img');
 
   //Change volume
-  volSlider.addEventListener('change', function(){
-    let volRange = volSlider.value;
-  
-    volSound.volume = volRange / 100;
-
-    if(volRange == 0){
+  volSlider.addEventListener('input', function(){
+    if(volSlider.value == 0){
       volImg.src = 'assets/icons/volume-level-0.svg';
     }
-    else if (volRange >= 1 && volRange < 33){
+    else if (volSlider.value >= 1 && volSlider.value < 33){
       volImg.src = 'assets/icons/volume-level-1.svg';
     }
-    else if (volRange >= 33 && volRange < 67){
+    else if (volSlider.value >= 33 && volSlider.value < 67){
       volImg.src = 'assets/icons/volume-level-2.svg';
-    }else{
+    }
+    else{
       volImg.src = 'assets/icons/volume-level-3.svg';
     } 
+
+    audio.volume = volSlider.value / 100;
   });
 }
